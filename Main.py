@@ -29,15 +29,17 @@ cars_df['Price'] = cars_df['Price'].map(lambda x: x.replace('.', ''))
 cars_df['Price'] = cars_df['Price'].map(lambda x: str(x)[:-4])
 cars_df['Price'] = pd.to_numeric(cars_df['Price'])
 
-
-#cars_df['Motor'] = cars_df.Car.map(lambda x: x.replace(',', '.'))
-cars_df['Motor'] = cars_df.Car.map(lambda x: re.findall("\d\,\d", x))
-
-cars_df['Motor'] = cars_df.Car.apply(lambda x: x.replace(',', '.'))
-#cars_df['Motor'] = cars_df['Motor'].replace(',', '.')
+cars_df['Car'] = cars_df.Car.map(lambda x: x.replace(',', '.'))
+cars_df['Motor'] = cars_df.Car.map(lambda x: re.findall("\d\.\d", x))
+cars_df['Motor'] = cars_df.Motor.map(lambda x: [float(i) for i in x])
 
 #cars_df['Motor'] = cars_df.Motor.apply(pd.to_numeric)
-cars_df['Motor'] = pd.to_numeric(cars_df['Motor'])
+#cars_df['Motor'] = pd.to_numeric(cars_df['Motor'])
+#cars_df['Motor'].convert_objects(convert_numeric=True)
+
+cars_df['Car'] = cars_df.Car.map(lambda x: re.findall("\w*\s\w*", x)[0])
+
 
 print(cars_df.head())
-print(type(cars_df['Motor']))
+print(type(cars_df['Car'][0]))
+print(type(cars_df['Motor'][0]))
