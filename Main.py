@@ -11,7 +11,6 @@ cars_df = pd.DataFrame(data)
 column_names = ['Car', 'HK', 'KM driven', 'KM/L', '0-100', 'Price', 'Year']
 cars_df.columns = column_names
 
-# Doesn't work. Yet.
 cars_df['Doors'] = cars_df.Car.apply(lambda x: x[-2:])
 cars_df['Doors'] = cars_df.Doors.apply(lambda x: x[:-1])
 cars_df.Doors = pd.to_numeric(cars_df.Doors, errors='coerce')
@@ -49,15 +48,19 @@ mean_value = cars_df['Motor'].mean()
 cars_df['Motor'] = cars_df['Motor'].fillna(mean_value)
 
 cars_df['Car'] = cars_df.Car.map(lambda x: re.findall("\w*\s\w*", x)[0])
-cars_df = cars_df.set_index('Car')
+
+#Set the car column as index
+#cars_df = cars_df.set_index('Car')
 
 cars_df.to_csv('test.csv', sep='\t')
 
 print(cars_df.head())
 print(cars_df.info())
 
-#cars_df.plot(kind='scatter', x='Price', y='Motor')
+corr = cars_df.corr()
+
+#sns.heatmap(corr, annot=True)
 #plt.show()
 
-sns.heatmap(cars_df, annot=True)
-plt.show()
+#sns.pairplot(cars_df, hue='Price')
+
