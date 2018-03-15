@@ -1,8 +1,9 @@
 import numpy as np
 from sklearn import preprocessing, cross_validation, neighbors
 import pandas as pd
+import tensorflow as tf
 
-df = pd.read_csv('C:/Users/Martin Birkemose/PycharmProjects/Bilbasen/test.csv', sep='\t', index_col=0)
+df = pd.read_csv('C:/Users/Martin Birkemose/PycharmProjects/Bilbasen/final_dataset.csv', sep='\t', index_col=0)
 df = df.drop(['Car'], 1)
 
 X = np.array(df.drop(['Price'], 1))
@@ -16,7 +17,10 @@ clf.fit(X_train, y_train)
 accuracy = clf.score(X_test, y_test)
 print(accuracy)
 
-#Format: [HK, KM Driven, KM/L, 0-100, Price, Year, Doors, Motor]
-example_measure = np.array([[150.0, 50, 24.0, 11.0, 2017, 5.0, 2.0]])
+# Format:               [HK, 0-100, KM driven, KM/L, Year, Doors, Motor]
+example_measure = np.array([[150.0, 8.0, 15, 22.0, 2017, 4.0, 2.0]])
 prediction = clf.predict(example_measure)
-print(prediction)
+prediction = prediction[0]
+print("Projected price: " + str(prediction))
+
+
