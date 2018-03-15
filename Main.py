@@ -4,17 +4,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-file = "C:/Users/Martin Birkemose/PycharmProjects/Bilbasen/bilbasen3 - dont delete.csv"
-data = pd.read_csv(file, header=None, sep=";")
+file = "C:/Users/Martin Birkemose/PycharmProjects/Bilbasen/bilbasen4.csv"
+# data = pd.read_csv(file, header=None, sep=";")
+data = pd.read_csv(file, header=1, sep=";", index_col=0)
 cars_df = pd.DataFrame(data)
 
-column_names = ['Car', 'HK', 'KM driven', 'KM/L', '0-100', 'Price', 'Year']
+# column_names = ['Car', 'HK', 'KM driven', 'KM/L', '0-100', 'Price', 'Year']
+column_names = ['Car', 'HK', '0-100', 'KM driven', 'KM/L', 'Price', 'Year']
 cars_df.columns = column_names
 
 cars_df['Doors'] = cars_df.Car.apply(lambda x: x[-2:])
 cars_df['Doors'] = cars_df.Doors.apply(lambda x: x[:-1])
 cars_df.Doors = pd.to_numeric(cars_df.Doors, errors='coerce')
-
 #Should be converted to int
 cars_df['HK'] = cars_df['HK'].map(lambda x: str(x)[:-3])
 cars_df['HK'] = pd.to_numeric(cars_df['HK'])
@@ -52,10 +53,12 @@ cars_df['Car'] = cars_df.Car.map(lambda x: re.findall("\w*\s\w*", x)[0])
 #Set the car column as index
 #cars_df = cars_df.set_index('Car')
 
-cars_df.to_csv('test.csv', sep='\t')
+#cars_df.to_csv('bilbasen3_dont_delete_clean.csv', sep='\t')
+cars_df.to_csv('bilbasen4_clean.csv', sep='\t')
 
 print(cars_df.head())
 print(cars_df.info())
+print(cars_df.describe())
 
 corr = cars_df.corr()
 

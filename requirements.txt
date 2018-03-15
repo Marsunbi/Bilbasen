@@ -1,4 +1,6 @@
 pandas
 numpy
 matplotlib
-regex
+seaborn
+sklearn
+tensorflow
