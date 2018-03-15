@@ -3,7 +3,7 @@ from sklearn import preprocessing, cross_validation, neighbors
 import pandas as pd
 import tensorflow as tf
 
-df = pd.read_csv('C:/Users/Martin Birkemose/PycharmProjects/Bilbasen/final_dataset.csv', sep='\t', index_col=0)
+df = pd.read_csv('final_dataset.csv', sep='\t', index_col=0)
 df = df.drop(['Car'], 1)
 
 X = np.array(df.drop(['Price'], 1))
